@@ -1,6 +1,6 @@
 [package]
 name = "shippo_pack"
-version = "0.1.31"
+version = "0.1.32"
 edition = "2021"
 authors = ["Pol Sala"]
 license = "MIT"
@@ -14,7 +14,7 @@ anyhow.workspace = true
 camino.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-shippo_core = { version = "0.1.30", path = "../shippo_core" }
+shippo_core = { version = "0.1.32", path = "../shippo_core" }
 flate2.workspace = true
 tar.workspace = true
 zip.workspace = true
