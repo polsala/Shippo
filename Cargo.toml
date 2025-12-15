@@ -12,7 +12,7 @@ resolver = "2"
 [workspace.package]
 edition = "2021"
 license = "MIT"
-authors = ["Shippo Authors"]
+authors = ["Pol Sala"]
 version = "0.1.26"
 
 [workspace.dependencies]
