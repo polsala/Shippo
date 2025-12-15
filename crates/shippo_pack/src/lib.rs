@@ -307,20 +307,18 @@ fn sign_file(dist: &Path, filename: &str, method: &str) -> Result<Option<String>
             }
         }
         // fall back to embedded signature file
-    } else if method == "cosign" {
-        if which::which("cosign").is_ok() {
-            let status = Command::new("cosign")
-                .args([
-                    "sign-blob",
-                    path.to_string_lossy().as_ref(),
-                    "--output",
-                    sig_path.to_string_lossy().as_ref(),
-                ])
-                .status();
-            if let Ok(status) = status {
-                if status.success() {
-                    return Ok(Some(sig_name));
-                }
+    } else if method == "cosign" && which::which("cosign").is_ok() {
+        let status = Command::new("cosign")
+            .args([
+                "sign-blob",
+                path.to_string_lossy().as_ref(),
+                "--output",
+                sig_path.to_string_lossy().as_ref(),
+            ])
+            .status();
+        if let Ok(status) = status {
+            if status.success() {
+                return Ok(Some(sig_name));
             }
         }
     }
@@ -352,8 +350,8 @@ mod tests {
         let artifact = Utf8PathBuf::from_path_buf(file).unwrap();
         let out_dir = dir.path().join("dist");
         fs::create_dir_all(&out_dir).unwrap();
-        create_tar_gz(&out_dir.join("a.tar.gz"), &[artifact.clone()]).unwrap();
-        create_zip(&out_dir.join("a.zip"), &[artifact]).unwrap();
+        create_tar_gz(&out_dir.join("a.tar.gz"), std::slice::from_ref(&artifact)).unwrap();
+        create_zip(&out_dir.join("a.zip"), std::slice::from_ref(&artifact)).unwrap();
         assert!(out_dir.join("a.tar.gz").exists());
         assert!(out_dir.join("a.zip").exists());
     }

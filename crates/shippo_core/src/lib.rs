@@ -447,12 +447,10 @@ fn validate_package_entry(pkg: &PackageEntry) -> Result<(), ConfigError> {
         )));
     }
     if let Some(node) = &pkg.node {
-        if node.mode == "cli-binary" {
-            if node.binary.is_none() {
-                return Err(ConfigError::Message(
-                    "node.cli-binary requires [node.binary]".to_string(),
-                ));
-            }
+        if node.mode == "cli-binary" && node.binary.is_none() {
+            return Err(ConfigError::Message(
+                "node.cli-binary requires [node.binary]".to_string(),
+            ));
         }
     }
     Ok(())
@@ -555,7 +553,7 @@ pub fn build_plan(
         )?);
     }
     if packages.is_empty() {
-        return Err(anyhow!("no packages selected").into());
+        return Err(anyhow!("no packages selected"));
     }
     Ok(Plan { version, packages })
 }
@@ -661,18 +659,12 @@ pub fn sha256_file(path: &Path) -> Result<String> {
 
 pub fn collect_files(root: &Path, patterns: &[String]) -> Vec<Utf8PathBuf> {
     let mut files = Vec::new();
-    for entry in WalkDir::new(root) {
-        if let Ok(e) = entry {
-            if e.file_type().is_file() {
-                let path = e.path();
-                if let Ok(p) = Utf8PathBuf::from_path_buf(path.to_path_buf()) {
-                    if patterns.is_empty() {
-                        files.push(p);
-                    } else {
-                        if patterns.iter().any(|pat| p.as_str().contains(pat)) {
-                            files.push(p);
-                        }
-                    }
+    for e in WalkDir::new(root).into_iter().flatten() {
+        if e.file_type().is_file() {
+            let path = e.path();
+            if let Ok(p) = Utf8PathBuf::from_path_buf(path.to_path_buf()) {
+                if patterns.is_empty() || patterns.iter().any(|pat| p.as_str().contains(pat)) {
+                    files.push(p);
                 }
             }
         }

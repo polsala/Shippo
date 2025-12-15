@@ -86,7 +86,7 @@ fn build_go(
     verbose: bool,
     version: &str,
 ) -> Result<BuiltTarget> {
-    let parts: Vec<&str> = target.split(|c| c == '-' || c == '/').collect();
+    let parts: Vec<&str> = target.split(['-', '/']).collect();
     let (goos, goarch) = if parts.len() >= 2 {
         (parts[0], parts[1])
     } else {

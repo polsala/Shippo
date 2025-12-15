@@ -91,7 +91,7 @@ fn upload_artifacts(token: &str, upload_url: &str, input: &ReleaseInput) -> Resu
 }
 
 fn changelog_body(mode: &str, tag: &str) -> Result<String> {
-    let prev = latest_tag().unwrap_or_else(|| "".to_string());
+    let prev = latest_tag().unwrap_or_default();
     if prev.is_empty() {
         return Ok(format!("Release {}", tag));
     }
