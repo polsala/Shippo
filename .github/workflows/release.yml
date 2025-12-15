@@ -1,0 +1,22 @@
+name: release
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install shippo
+        run: cargo install --path crates/shippo
+      - name: Build & package
+        run: shippo package --config .shippo.toml --output dist
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: shippo release --config .shippo.toml --output dist

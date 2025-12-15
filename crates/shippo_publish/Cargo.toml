@@ -1,0 +1,14 @@
+[package]
+name = "shippo_publish"
+version = "0.1.0"
+edition = "2021"
+authors = ["Shippo Authors"]
+license = "MIT"
+
+[dependencies]
+anyhow.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+shippo_core = { path = "../shippo_core" }
+shippo_git = { path = "../shippo_git" }

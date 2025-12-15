@@ -1,0 +1,35 @@
+[project]
+name = "shippo"
+type = "rust"
+path = "."
+
+[version]
+source = "git"
+
+[build]
+targets = ["native"]
+
+[package]
+formats = ["tar.gz", "zip"]
+name_template = "{name}-{version}-{target}"
+
+[sbom]
+enabled = true
+format = "cyclonedx"
+mode = "auto"
+
+[sign]
+enabled = false
+method = "cosign"
+cosign_mode = "keyless"
+
+[release]
+provider = "github"
+draft = true
+prerelease = false
+[release.github]
+owner = "polsala"
+repo = "shippo"
+
+[changelog]
+mode = "auto"

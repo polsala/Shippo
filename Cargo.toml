@@ -1,0 +1,51 @@
+[workspace]
+members = [
+    "crates/shippo",
+    "crates/shippo_core",
+    "crates/shippo_builders",
+    "crates/shippo_pack",
+    "crates/shippo_git",
+    "crates/shippo_publish",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+authors = ["Shippo Authors"]
+version = "0.1.0"
+
+[workspace.dependencies]
+anyhow = "1"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+toml = "0.8"
+clap = { version = "4", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+camino = { version = "1", features = ["serde1"] }
+regex = "1"
+chrono = { version = "0.4", features = ["serde"] }
+semver = "1"
+sha2 = "0.10"
+hex = "0.4"
+walkdir = "2"
+tempfile = "3"
+zip = { version = "0.6", default-features = false, features = ["deflate"] }
+flate2 = "1"
+tar = "0.4"
+ignore = "=0.4.20"
+url = "2"
+reqwest = { version = "0.11", features = ["json", "rustls-tls", "blocking"] }
+indicatif = "0.17"
+which = "5"
+async-trait = "0.1"
+uuid = { version = "1", features = ["v4", "serde"] }
+sha2-asm = "0.3"
+tempfile-fast = "0.4"
+base64 = "0.21"
+
+[workspace.metadata.release]
+allow-branch = ["main", "master"]

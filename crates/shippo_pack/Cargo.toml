@@ -1,0 +1,25 @@
+[package]
+name = "shippo_pack"
+version = "0.1.0"
+edition = "2021"
+authors = ["Shippo Authors"]
+license = "MIT"
+
+[dependencies]
+anyhow.workspace = true
+camino.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+shippo_core = { path = "../shippo_core" }
+flate2.workspace = true
+tar.workspace = true
+zip.workspace = true
+chrono.workspace = true
+sha2.workspace = true
+hex.workspace = true
+walkdir.workspace = true
+tracing.workspace = true
+which.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

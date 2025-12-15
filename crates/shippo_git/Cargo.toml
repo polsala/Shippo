@@ -1,0 +1,10 @@
+[package]
+name = "shippo_git"
+version = "0.1.0"
+edition = "2021"
+authors = ["Shippo Authors"]
+license = "MIT"
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
