@@ -7,7 +7,7 @@ path = "."
 source = "git"
 
 [build]
-targets = ["native"]
+targets = ["native", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-gnu"]
 
 [package]
 formats = ["tar.gz", "zip"]
