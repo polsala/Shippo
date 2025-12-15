@@ -8,6 +8,7 @@ permissions:
   contents: write
 
 jobs:
+  if: ${{ !startsWith(github.event.head_commit.message, 'Bump to v') }}
   bump-and-tag:
     runs-on: ubuntu-latest
     steps:
@@ -70,7 +71,7 @@ jobs:
           git config user.name "shippo-bot"
           git config user.email "shippo-bot@users.noreply.github.com"
           git add Cargo.toml crates/*/Cargo.toml
-          git commit -m "chore: bump version to v$VERSION"
+          git commit -m "Bump to v$VERSION"
           git push
       - name: Create tag if missing
         env:

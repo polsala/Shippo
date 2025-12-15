@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        token: ${{ secrets.TAG_PUSH_TOKEN }}
+        with:
+          token: ${{ secrets.TAG_PUSH_TOKEN }}
       - name: Install shippo
         run: cargo install --path crates/shippo
       - name: Build & package
