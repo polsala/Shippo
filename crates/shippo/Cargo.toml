@@ -1,6 +1,6 @@
 [package]
 name = "shippo-release"
-version = "0.1.30"
+version = "0.1.31"
 edition = "2021"
 authors = ["Pol Sala"]
 license = "MIT"
@@ -23,8 +23,8 @@ tracing.workspace = true
 tracing-subscriber.workspace = true
 camino.workspace = true
 toml.workspace = true
-shippo_core = { version = "0.1.30", path = "../shippo_core" }
-shippo_builders = { version = "0.1.30", path = "../shippo_builders" }
-shippo_pack = { version = "0.1.30", path = "../shippo_pack" }
-shippo_git = { version = "0.1.30", path = "../shippo_git" }
-shippo_publish = { version = "0.1.30", path = "../shippo_publish" }
+shippo_core = { version = "0.1.31", path = "../shippo_core" }
+shippo_builders = { version = "0.1.31", path = "../shippo_builders" }
+shippo_pack = { version = "0.1.31", path = "../shippo_pack" }
+shippo_git = { version = "0.1.31", path = "../shippo_git" }
+shippo_publish = { version = "0.1.31", path = "../shippo_publish" }

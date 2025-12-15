@@ -1,6 +1,6 @@
 [package]
 name = "shippo_git"
-version = "0.1.30"
+version = "0.1.31"
 edition = "2021"
 authors = ["Pol Sala"]
 license = "MIT"
