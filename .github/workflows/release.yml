@@ -38,4 +38,10 @@ jobs:
         env:
           #CARGO_TARGET_DIR: target-cross
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish -p shippo-release --token "${CARGO_REGISTRY_TOKEN}"
+        run: |
+          cargo publish -p shippo_core --token "${CARGO_REGISTRY_TOKEN}"
+          cargo publish -p shippo_git --token "${CARGO_REGISTRY_TOKEN}"
+          cargo publish -p shippo_builders --token "${CARGO_REGISTRY_TOKEN}"
+          cargo publish -p shippo_pack --token "${CARGO_REGISTRY_TOKEN}"
+          cargo publish -p shippo_publish --token "${CARGO_REGISTRY_TOKEN}"
+          cargo publish -p shippo-release --token "${CARGO_REGISTRY_TOKEN}"

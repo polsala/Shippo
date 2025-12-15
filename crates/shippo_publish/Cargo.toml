@@ -8,7 +8,6 @@ description = "GitHub release publisher for Shippo"
 repository = "https://github.com/polsala/Shippo"
 homepage = "https://github.com/polsala/Shippo"
 readme = "../../README.md"
-publish = false
 
 [dependencies]
 anyhow.workspace = true
