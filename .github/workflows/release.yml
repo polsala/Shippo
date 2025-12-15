@@ -23,9 +23,12 @@ jobs:
         run: cargo install cross --git https://github.com/cross-rs/cross
       - name: Install shippo
         run: cargo install --path crates/shippo
+      - name: Clean (avoid host/container artifact reuse)
+        run: cargo clean
       - name: Build & package
         run: shippo --config .shippo.toml package
       - name: Release
         env:
+          CARGO_TARGET_DIR: target-cross
           GITHUB_TOKEN: ${{ secrets.TAG_PUSH_TOKEN }}
         run: shippo --config .shippo.toml release
