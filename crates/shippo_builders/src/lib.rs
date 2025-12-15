@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use anyhow::{anyhow, Context, Result};
@@ -56,16 +56,20 @@ fn build_rust(
     };
     cmd.current_dir(workspace_root.join(plan.path.as_str()));
     run(cmd, verbose)?;
+    let target_root = std::env::var("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .map(|p| {
+            if p.is_absolute() {
+                p
+            } else {
+                workspace_root.join(p)
+            }
+        })
+        .unwrap_or_else(|_| workspace_root.join(plan.path.as_str()).join("target"));
     let binary_dir = if target == "native" {
-        workspace_root
-            .join(plan.path.as_str())
-            .join("target/release")
+        target_root.join("release")
     } else {
-        workspace_root
-            .join(plan.path.as_str())
-            .join("target")
-            .join(target)
-            .join("release")
+        target_root.join(target).join("release")
     };
     let mut artifacts = Vec::new();
     if binary_dir.exists() {
