@@ -8,6 +8,7 @@ description = "Shippo: polyglot release orchestrator for Rust, Go, Node, and Pyt
 repository = "https://github.com/polsala/Shippo"
 homepage = "https://github.com/polsala/Shippo"
 readme = "../../README.md"
+publish = true
 
 [dependencies]
 anyhow.workspace = true
