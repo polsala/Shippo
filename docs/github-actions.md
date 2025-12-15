@@ -19,8 +19,8 @@ jobs:
         with:
           toolchain: stable
       - run: cargo install --path crates/shippo
-      - run: shippo release --config .shippo.toml --dry-run
-      - run: shippo release --config .shippo.toml
+      - run: shippo --config .shippo.toml release --dry-run
+      - run: shippo --config .shippo.toml release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
