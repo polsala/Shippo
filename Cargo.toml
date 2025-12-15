@@ -38,7 +38,7 @@ flate2 = "1"
 tar = "0.4"
 ignore = "=0.4.20"
 url = "2"
-reqwest = { version = "0.11", features = ["json", "rustls-tls", "blocking"] }
+reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls", "blocking"] }
 indicatif = "0.17"
 which = "5"
 async-trait = "0.1"
