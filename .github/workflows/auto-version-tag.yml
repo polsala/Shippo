@@ -54,19 +54,16 @@ jobs:
           if changed:
               data['workspace']['package']['version'] = new_ver
               root.write_text(tomlkit.dumps(data))
+              internal = ['shippo_core', 'shippo_builders', 'shippo_pack', 'shippo_git', 'shippo_publish']
               for path in pathlib.Path('crates').glob('*/Cargo.toml'):
                   pkg = tomlkit.parse(path.read_text())
                   if 'package' in pkg:
                       pkg['package']['version'] = new_ver
-                      path.write_text(tomlkit.dumps(pkg))
-              cli_path = pathlib.Path('crates/shippo/Cargo.toml')
-              if cli_path.exists():
-                  cli = tomlkit.parse(cli_path.read_text())
-                  deps = cli.get('dependencies', {})
-                  for name in ['shippo_core', 'shippo_builders', 'shippo_pack', 'shippo_git', 'shippo_publish']:
+                  deps = pkg.get('dependencies', {})
+                  for name in internal:
                       if name in deps and isinstance(deps[name], dict):
                           deps[name]['version'] = new_ver
-                  cli_path.write_text(tomlkit.dumps(cli))
+                  path.write_text(tomlkit.dumps(pkg))
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as fh:
               fh.write(f"version={new_ver}\n")
               fh.write(f"changed={'true' if changed else 'false'}\n")
