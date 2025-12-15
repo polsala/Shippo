@@ -74,14 +74,19 @@ jobs:
       - name: Create tag if missing
         env:
           VERSION: ${{ steps.version.outputs.version }}
+          TAG_PUSH_TOKEN: ${{ secrets.TAG_PUSH_TOKEN }}
         run: |
           TAG="v$VERSION"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Tag $TAG already exists; skipping"
             exit 0
           fi
+
           git config user.name "shippo-bot"
           git config user.email "shippo-bot@users.noreply.github.com"
+
           git tag "$TAG"
+
+          git remote set-url origin "https://x-access-token:${TAG_PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin "$TAG"
           echo "created $TAG"
