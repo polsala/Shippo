@@ -30,8 +30,12 @@ pub fn changelog_between(prev: &str, curr: &str, mode: &str) -> Result<String> {
     } else {
         "%h %s"
     };
+    let range = format!("{prev}..{curr}");
+    let fmt_arg = format!("--pretty=format:{format}");
     let output = Command::new("git")
-        .args(["log", &format!("{}..{}", prev, curr), "--pretty", format])
+        .arg("log")
+        .arg(&range)
+        .arg(fmt_arg)
         .output()?;
     if output.status.success() {
         Ok(String::from_utf8_lossy(&output.stdout).to_string())
