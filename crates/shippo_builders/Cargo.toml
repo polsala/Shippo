@@ -13,7 +13,7 @@ readme = "../../README.md"
 anyhow.workspace = true
 camino.workspace = true
 serde.workspace = true
-shippo_core = { path = "../shippo_core" }
+shippo_core = { version = "0.1.30", path = "../shippo_core" }
 which.workspace = true
 tracing.workspace = true
 tempfile.workspace = true
