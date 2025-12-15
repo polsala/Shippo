@@ -2,6 +2,7 @@ use std::fs;
 use std::path::Path;
 
 use anyhow::{anyhow, Context, Result};
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use reqwest::blocking::Client;
 use reqwest::header::{ACCEPT, AUTHORIZATION, USER_AGENT};
 use serde::Serialize;
@@ -74,17 +75,21 @@ fn upload_artifacts(token: &str, upload_url: &str, input: &ReleaseInput) -> Resu
         }
         let path = entry.path();
         let name = entry.file_name().to_string_lossy().to_string();
-        let url = format!("{}?name={}", upload_url, name);
+        let encoded = utf8_percent_encode(&name, NON_ALPHANUMERIC).to_string();
+        let url = format!("{}?name={}", upload_url, encoded);
         let data = fs::read(&path)?;
         let res = client
             .post(&url)
             .header(USER_AGENT, "shippo/1.0")
             .header(ACCEPT, "application/vnd.github+json")
+            .header("Content-Type", "application/octet-stream")
             .header(AUTHORIZATION, format!("Bearer {}", token))
             .body(data)
             .send()?;
         if !res.status().is_success() {
-            return Err(anyhow!("failed to upload {}: {}", name, res.status()));
+            let status = res.status();
+            let body = res.text().unwrap_or_default();
+            return Err(anyhow!("failed to upload {}: {} {}", name, status, body));
         }
     }
     Ok(())

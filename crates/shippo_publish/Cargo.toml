@@ -12,3 +12,4 @@ serde.workspace = true
 serde_json.workspace = true
 shippo_core = { path = "../shippo_core" }
 shippo_git = { path = "../shippo_git" }
+percent-encoding.workspace = true
