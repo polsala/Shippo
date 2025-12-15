@@ -40,11 +40,20 @@ fn build_rust(
     target: &str,
     verbose: bool,
 ) -> Result<BuiltTarget> {
-    let mut cmd = Command::new("cargo");
-    cmd.arg("build").arg("--release");
-    if target != "native" {
-        cmd.arg("--target").arg(target);
-    }
+    let use_cross = std::env::var("SHIPPO_USE_CROSS").is_ok()
+        || (target != "native" && which::which("cross").is_ok());
+    let mut cmd = if use_cross && target != "native" {
+        let mut c = Command::new("cross");
+        c.arg("build").arg("--release").arg("--target").arg(target);
+        c
+    } else {
+        let mut c = Command::new("cargo");
+        c.arg("build").arg("--release");
+        if target != "native" {
+            c.arg("--target").arg(target);
+        }
+        c
+    };
     cmd.current_dir(workspace_root.join(plan.path.as_str()));
     run(cmd, verbose)?;
     let binary_dir = if target == "native" {
