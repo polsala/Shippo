@@ -26,6 +26,7 @@ jobs:
       - name: Clean (avoid host/container artifact reuse)
         run: cargo clean
       - name: Build & package
+        CARGO_TARGET_DIR: target-cross
         run: shippo --config .shippo.toml package
       - name: Release
         env:
